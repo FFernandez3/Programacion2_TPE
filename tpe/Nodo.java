@@ -1,6 +1,8 @@
 package tpe;
 
-public class Nodo implements Comparable <Nodo>{
+import java.util.Iterator;
+
+public class Nodo implements Comparable <Nodo>, Iterator<Object>{
 	private Nodo siguiente;
 	private Comparable<Object> objeto;
 	
@@ -34,6 +36,20 @@ public class Nodo implements Comparable <Nodo>{
 
 	public void setObjeto(Comparable<Object> objeto) {
 		this.objeto = objeto;
+	}
+
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Object next() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
