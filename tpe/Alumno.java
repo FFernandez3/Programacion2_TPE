@@ -54,6 +54,10 @@ public class Alumno {
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
+	@Override
+	public String toString () {
+		return this.getNombre()  +" "+ this.getApellido() +",";
+	}
 	
 	
 	

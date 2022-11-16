@@ -2,11 +2,13 @@ package tpe;
 
 import java.util.Comparator;
 
-public class ComparadorNombre implements Comparator <Alumno>{
+public class ComparadorNombre implements Comparator <Object>{
 	@Override
-	public int compare(Alumno o1, Alumno o2) {
+	public int compare(Object o1, Object o2) {
+		Alumno a1=(Alumno) o1;
+		Alumno a2=(Alumno) o2;
 		
-		return o1.getNombre().compareTo(o2.getNombre());
+		return a1.getNombre().compareTo(a2.getNombre());
 	}
 
 }

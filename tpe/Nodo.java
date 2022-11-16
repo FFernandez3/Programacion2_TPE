@@ -2,16 +2,15 @@ package tpe;
 
 
 public class Nodo {
-	private int id;
+	//private int id;
 	private Nodo siguiente;
 	private Object objeto;
 	
 	
 	
 
-	public Nodo(Object objeto, int id) {		
+	public Nodo(Object objeto) {		
 		this.objeto = objeto;
-		this.id=id;
 		this.siguiente=null;
 	}
 	
@@ -38,23 +37,23 @@ public class Nodo {
 	}
 	
 	
-	public int getId() {
-		return id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//
+//
+//
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-
-
-	public String toString() {
-		return "Nodo " +this.getId();
-	}
+//	public String toString() {
+//		return "Nodo " +this.getId();
+//	}
 
 
 	

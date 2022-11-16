@@ -74,16 +74,16 @@ public class ListaVinculada  implements Iterable <Object> {
 	        } 
 	     else {
 	 
-	            //Cojo el nodo anterior al que quiero borrar
+	            
 	            Nodo anterior = getNodo(pos - 1);
 	 
-	            //Cojo el nodo que quiero borrar
+	            
 	            Nodo actual = getNodo(pos);
 	 
-	            //Cojo el nodo siguiente al que quiero borrar
+	           
 	            Nodo siguiente = actual.getSiguiente();
 	
-	            //El nodo anterior apunta al nodo siguiente
+	           
 	            anterior.setSiguiente(siguiente);
 	 
 	           // cantElementos--;
@@ -97,13 +97,46 @@ public class ListaVinculada  implements Iterable <Object> {
             return;
         } else {
  
-            //Cojo el segundo
+            
             Nodo aux = primero.getSiguiente();
             primero = aux; //Este es mi nuevo primero
  
          //   cantElementos--;
         }
 	}
+	public void eliminarTodasLasOcurrencias2(Object obj) {
+		if(this.estaVacia()) {
+			return;
+		}
+		else {
+			Nodo puntero=primero;
+			Nodo punteroMasUno=primero.getSiguiente();
+			 while(puntero!=null&& puntero.getSiguiente() != null ) {	 
+				 if(puntero.getSiguiente().getObjeto().equals(obj)) {
+					 punteroMasUno=puntero.getSiguiente();
+					 while(punteroMasUno.getObjeto().equals(obj)  ) {
+						 if(punteroMasUno.getSiguiente()!=null) {
+							 punteroMasUno=punteroMasUno.getSiguiente();
+						 }
+						 else {
+							 return;
+						 }
+						 
+					}//sale del 2do while
+					 if(!punteroMasUno.getObjeto().equals(obj))
+						 puntero.setSiguiente(punteroMasUno);
+					 else
+						 System.out.println("hola");
+						 puntero.setSiguiente(null);
+					 
+				 }
+				 //puntero=puntero.getSiguiente();		 
+			}
+			
+		}
+		
+	}
+	
 	
 	//Consigna 1 c
 	public void eliminarTodasLasOcurrencias(Object obj) {
@@ -112,24 +145,61 @@ public class ListaVinculada  implements Iterable <Object> {
 		}
 		else {
 			    Nodo p = primero;
+			    boolean cambioPrimero=false;
+			    int contador=0;
 			   
-			    while(p!=null) {
-			        while(p.getSiguiente() != null) {
-			            if(p.getObjeto() == obj) {
-			            	
-			                p.setSiguiente(p.getSiguiente().getSiguiente()); //el siguente de p es el 3ro
-			              
-			            } else {
-			                p = p.getSiguiente();
-			            }
-			        }
-			        p = p.getSiguiente(); //ahora p es el segundo
-			    }
+			    while(p!=null&& p.getSiguiente() != null ) {
+			    	
+//			    	if(p.getObjeto()==obj && p.getSiguiente()==null) {
+//			    		p=null;
+//			    		return;
+//			    	}
+			       // while(p.getSiguiente() != null) {
+			    		if(p.getObjeto()==obj) {
+			    			p=p.getSiguiente();
+			    			
+			    			if(cambioPrimero==false && contador>1) {
+			    				this.setPrimero(p);
+			    				cambioPrimero=true;
+			    			}
+			    		}
+			    		else {
+			    			if(p.getSiguiente().getObjeto() == obj) {
+			    				if (p.getSiguiente().getSiguiente()!=null) {
+			    					 p.setSiguiente(p.getSiguiente().getSiguiente()); //el siguente de p es el 3ro
+			    				}
+			    				else {
+			    					p.setSiguiente(null);
+			    					
+			    				}
+				         
+				               
+				               // p = p.getSiguiente();
+				                //this.setPrimero(p.getSiguiente());
+				                
+				                
+				           // } 
+			    			
+			    		}
+			    			p = p.getSiguiente();
+			    			contador++;
+			    	 
+//			            else if(p.getObjeto()==obj) {
+//			            	 p = p.getSiguiente();
+//			            }
+			       // }
+			            
+			       // p = p.getSiguiente(); //ahora p es el segundo
+			        
+	//		    }
 			}
+			    
 			
 				
 			
 		}
+		}
+	}
 		
 	
 	
@@ -184,32 +254,61 @@ public class ListaVinculada  implements Iterable <Object> {
 //				anterior.setSiguiente(nodoNuevo);
 //			}
 //		}
+
 	//Consigna 1 a
-	public void insertarOrdenado(Nodo nodoNuevo) {
-		if(comparador.compare(nodoNuevo, primero)<0) {
-			nodoNuevo.setSiguiente(primero);
-			this.primero=nodoNuevo;
-			return;
-		}
-		Nodo actual =primero;
-		Nodo anterior=null;
-		while((actual!=null)&&(comparador.compare(nodoNuevo, actual)>0) ){
-			anterior=actual;
-			actual=actual.getSiguiente();
-		}
-		if(actual==null) {
-			anterior.setSiguiente(nodoNuevo);
-			
+	public void insertarOrdenado(Object objNuevo) {
+		Nodo n = new Nodo(objNuevo);
+		if(this.primero == null){
+			this.primero = n;
 		}
 		else {
-			nodoNuevo.setSiguiente(actual);
-			if(actual==primero) {
-				primero=nodoNuevo;
+			Nodo actual =primero;
+			Nodo anterior=null;
+			while (actual!=null && comparador.compare(actual.getObjeto(), (objNuevo))< 0){
+				anterior = actual;
+				actual = actual.getSiguiente();
 			}
-			else {
-				anterior.setSiguiente(nodoNuevo);
+			if(actual == null){
+				anterior.setSiguiente(n);
 			}
+			else{
+				n.setSiguiente(actual);
+				if(actual == this.primero){
+					this.primero = n;
+				}
+				else {
+					anterior.setSiguiente(n);
+				}
+			}
+			
 		}
+			
+			
+		
+	
+//		if(comparador.compare(objNuevo, primero.getObjeto())<0) {
+//			n.setSiguiente(primero);
+//			this.primero=n;
+//			return;
+//		}
+//		
+//		while((actual!=null)&&(comparador.compare(nodoNuevo, actual)>0) ){
+//			anterior=actual;
+//			actual=actual.getSiguiente();
+//		}
+//		if(actual==null) {
+//			anterior.setSiguiente(nodoNuevo);
+//			
+//		}
+//		else {
+//			nodoNuevo.setSiguiente(actual);
+//			if(actual==primero) {
+//				primero=nodoNuevo;
+//			}
+//			else {
+//				anterior.setSiguiente(nodoNuevo);
+//			}
+//		}
 		
 			
 		
@@ -223,7 +322,7 @@ public class ListaVinculada  implements Iterable <Object> {
         if(this.estaVacia()==false) {
 
             while(p!=null) {
-            	s+=p.toString()+" ";
+            	s+=p.getObjeto().toString()+" ";
 
                 //s = s + p.getObjeto() + "-->";
                 p = p.getSiguiente();
