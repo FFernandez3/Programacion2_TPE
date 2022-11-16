@@ -2,15 +2,15 @@ package tpe;
 
 import java.util.ArrayList;
 
-public class Alumno {
+public class Alumno extends ElementoAbstracto{
 	private String nombre, apellido;
 	private Long dni;
 	private int edad;
 	private ArrayList<String>intereses;
 	
 	public Alumno(String nombre, String apellido, long dni, int edad) {
-		
-		this.nombre = nombre;
+		super(nombre);
+	
 		this.apellido = apellido;
 		this.dni = dni;
 		this.edad = edad;
@@ -23,13 +23,6 @@ public class Alumno {
 		}
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 	public String getApellido() {
 		return apellido;
@@ -57,6 +50,12 @@ public class Alumno {
 	@Override
 	public String toString () {
 		return this.getNombre()  +" "+ this.getApellido() +",";
+	}
+
+	@Override
+	public int getCantAlumnos() {
+		
+		return 1;
 	}
 	
 	

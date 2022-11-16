@@ -10,8 +10,9 @@ public class ListaVinculada  implements Iterable <Object> {
 	private Comparator<Object> comparador;
 	
 	//constructor
-	public ListaVinculada() {
+	public ListaVinculada(Comparator<Object> c) {
 		this.primero=null;
+		this.comparador=c;
 		//this.cantElementos=0;
 	}
 	//Consigna 1 f
@@ -91,6 +92,7 @@ public class ListaVinculada  implements Iterable <Object> {
 	 
 	        }
 	    }
+	
 	public void eliminarPrimerNodo() {
 		//Si la lista esta vacia, devolvemos null
         if (estaVacia()) {
@@ -104,103 +106,39 @@ public class ListaVinculada  implements Iterable <Object> {
          //   cantElementos--;
         }
 	}
-	public void eliminarTodasLasOcurrencias2(Object obj) {
-		if(this.estaVacia()) {
-			return;
-		}
-		else {
-			Nodo puntero=primero;
-			Nodo punteroMasUno=primero.getSiguiente();
-			 while(puntero!=null&& puntero.getSiguiente() != null ) {	 
-				 if(puntero.getSiguiente().getObjeto().equals(obj)) {
-					 punteroMasUno=puntero.getSiguiente();
-					 while(punteroMasUno.getObjeto().equals(obj)  ) {
-						 if(punteroMasUno.getSiguiente()!=null) {
-							 punteroMasUno=punteroMasUno.getSiguiente();
-						 }
-						 else {
-							 return;
-						 }
-						 
-					}//sale del 2do while
-					 if(!punteroMasUno.getObjeto().equals(obj))
-						 puntero.setSiguiente(punteroMasUno);
-					 else
-						 System.out.println("hola");
-						 puntero.setSiguiente(null);
-					 
-				 }
-				 //puntero=puntero.getSiguiente();		 
-			}
-			
-		}
-		
-	}
 	
 	
-	//Consigna 1 c
 	public void eliminarTodasLasOcurrencias(Object obj) {
-		if(this.estaVacia()) {
-			return;
-		}
-		else {
-			    Nodo p = primero;
-			    boolean cambioPrimero=false;
-			    int contador=0;
-			   
-			    while(p!=null&& p.getSiguiente() != null ) {
-			    	
-//			    	if(p.getObjeto()==obj && p.getSiguiente()==null) {
-//			    		p=null;
-//			    		return;
-//			    	}
-			       // while(p.getSiguiente() != null) {
-			    		if(p.getObjeto()==obj) {
-			    			p=p.getSiguiente();
-			    			
-			    			if(cambioPrimero==false && contador>1) {
-			    				this.setPrimero(p);
-			    				cambioPrimero=true;
-			    			}
-			    		}
-			    		else {
-			    			if(p.getSiguiente().getObjeto() == obj) {
-			    				if (p.getSiguiente().getSiguiente()!=null) {
-			    					 p.setSiguiente(p.getSiguiente().getSiguiente()); //el siguente de p es el 3ro
-			    				}
-			    				else {
-			    					p.setSiguiente(null);
-			    					
-			    				}
-				         
-				               
-				               // p = p.getSiguiente();
-				                //this.setPrimero(p.getSiguiente());
-				                
-				                
-				           // } 
-			    			
-			    		}
-			    			p = p.getSiguiente();
-			    			contador++;
-			    	 
-//			            else if(p.getObjeto()==obj) {
-//			            	 p = p.getSiguiente();
-//			            }
-			       // }
-			            
-			       // p = p.getSiguiente(); //ahora p es el segundo
-			        
-	//		    }
-			}
-			    
-			
-				
-			
-		}
-		}
-	}
+	
+		Nodo p = primero;
+		Nodo anterior=null;
+		   
+	    while(p!=null) {
+            if(p.getObjeto().equals(obj)) {
+            	if(p==primero) {
+            		primero=p.getSiguiente();
+            	}
+            	else if(p.getSiguiente()!=null) {
+            		anterior.setSiguiente(p.getSiguiente());
+            		
+            	}
+            	else {
+            		anterior.setSiguiente(null);
+            	}
+
+             }
+            else {
+            	anterior=p;
+            }
+            
+            p = p.getSiguiente(); //ahora p es el segundo
+    }
+	    //1 4 55 55 65 70
+	    //1 4 55 65 70
 		
+	}
+	
+	
 	
 	
 	public Nodo getNodo(int pos) {
@@ -264,7 +202,7 @@ public class ListaVinculada  implements Iterable <Object> {
 		else {
 			Nodo actual =primero;
 			Nodo anterior=null;
-			while (actual!=null && comparador.compare(actual.getObjeto(), (objNuevo))< 0){
+			while (actual!=null && comparador.compare(actual.getObjeto(), (objNuevo))<0){
 				anterior = actual;
 				actual = actual.getSiguiente();
 			}
@@ -273,7 +211,7 @@ public class ListaVinculada  implements Iterable <Object> {
 			}
 			else{
 				n.setSiguiente(actual);
-				if(actual == this.primero){
+				if(actual.equals(primero)){
 					this.primero = n;
 				}
 				else {
@@ -282,6 +220,7 @@ public class ListaVinculada  implements Iterable <Object> {
 			}
 			
 		}
+		
 			
 			
 		
@@ -313,6 +252,30 @@ public class ListaVinculada  implements Iterable <Object> {
 			
 		
 	}
+	public void insertarOrdenado2(Object objNuevo) {
+		Nodo nodo = new Nodo(objNuevo);
+		if(this.primero == null){
+			this.primero = nodo;
+		}
+		else {
+			Nodo actual =primero;
+			if (actual!=null && comparador.compare(actual.getObjeto(), (objNuevo))>0){
+				nodo.setSiguiente(actual);
+				primero=nodo;
+			}
+			else {
+				while (actual.getSiguiente()!=null && comparador.compare(objNuevo, actual.getSiguiente().getObjeto())<0){
+					actual=actual.getSiguiente();
+				} //cierro while
+				nodo.setSiguiente(actual.getSiguiente());
+				actual.setSiguiente(nodo);
+			}
+				
+			}
+			}
+			
+		
+	
 	public String toString() {
 
         String s = "";
