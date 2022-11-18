@@ -6,8 +6,10 @@ public abstract class ElementoAbstracto {
 	public ElementoAbstracto(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public abstract int getCantAlumnos();
+
+	public abstract String toString();
 
 	public String getNombre() {
 		return nombre;
@@ -16,11 +18,5 @@ public abstract class ElementoAbstracto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public String toString() {
-		return this.getNombre()+", ";
-	}
-	
-	
 
 }

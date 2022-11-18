@@ -2,27 +2,30 @@ package tpe;
 
 import java.util.ArrayList;
 
-public class Alumno extends ElementoAbstracto{
+public class Alumno extends ElementoAbstracto {
 	private String nombre, apellido;
 	private Long dni;
 	private int edad;
-	private ArrayList<String>intereses;
-	
+	private ArrayList<String> intereses;
+
 	public Alumno(String nombre, String apellido, long dni, int edad) {
 		super(nombre);
-	
+
 		this.apellido = apellido;
 		this.dni = dni;
 		this.edad = edad;
-		this.intereses=new ArrayList<>();
+		this.intereses = new ArrayList<>();
 	}
-	
+
 	public void addInteres(String nuevoInteres) {
-		if(!this.intereses.contains(nuevoInteres)) {
+		if (!this.intereses.contains(nuevoInteres)) {
 			this.intereses.add(nuevoInteres);
 		}
 	}
 
+	public ArrayList<String> getIntereses() {
+		return new ArrayList<>(intereses);
+	}
 
 	public String getApellido() {
 		return apellido;
@@ -47,18 +50,23 @@ public class Alumno extends ElementoAbstracto{
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
+
 	@Override
-	public String toString () {
-		return this.getNombre()  +" "+ this.getApellido() +",";
+	public String toString() {
+		String suma = this.getNombre() + " " + this.getApellido() + "  DNI: " + this.getDni() + " [";
+		for (int i = 0; i < this.getIntereses().size(); i++) {
+			String interes = this.getIntereses().get(i);
+			suma += "'" + interes + "'" + ", ";
+
+		}
+		suma += "] ";
+		return suma;
 	}
 
 	@Override
 	public int getCantAlumnos() {
-		
+
 		return 1;
 	}
-	
-	
-	
 
 }
